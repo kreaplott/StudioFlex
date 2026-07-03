@@ -16,6 +16,18 @@ export default function CustomerEditor({
   const [fontSizes, setFontSizes] = useState<Record<string, number>>({});
  const [fontFamilies, setFontFamilies] = useState<Record<string, string>>({});
   const [colors, setColors] = useState<Record<string, string>>({});
+  
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+useEffect(() => {
+  function handleResize() {
+    setWindowWidth(window.innerWidth);
+  }
+
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
+  
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -79,12 +91,22 @@ setColors(initialColors);
     return <p style={{ padding: 40 }}>Vorlage wird geladen...</p>;
   }
 
-    const previewWidth = 420;
-    const previewHeight = 594;
-    const scale = 1;
+   const isMobile = windowWidth < 800;
+
+const previewWidth = isMobile
+  ? Math.min(windowWidth - 40, 360)
+  : 420;
+
+const scale = previewWidth / 420;
+const previewHeight = 594 * scale;
 
   return (
-    <main style={styles.page}>
+    <main
+  style={{
+    ...styles.page,
+    padding: isMobile ? 16 : 40,
+  }}
+>
       <div style={styles.container}>
         <header style={styles.header}>
           <h1 style={styles.logo}>
@@ -93,7 +115,12 @@ setColors(initialColors);
           <p style={styles.subtitle}>Personalisiere deine Vorlage.</p>
         </header>
 
-        <div style={styles.layout}>
+        <div
+  style={{
+    ...styles.layout,
+    gridTemplateColumns: isMobile ? "1fr" : "1fr 380px",
+  }}
+>
           <section style={styles.previewPanel}>
             <div
               ref={cardRef}
@@ -171,7 +198,13 @@ const fontSize =
             </div>
           </section>
 
-         <aside style={styles.formPanel}>
+        <aside
+  style={{
+    ...styles.formPanel,
+    position: isMobile ? "static" : "sticky",
+    maxHeight: isMobile ? "none" : "calc(100vh - 80px)",
+  }}
+>
   <h2 style={styles.formTitle}>{config.name}</h2>
 
   <div style={styles.formContent}>
@@ -301,7 +334,7 @@ const fontSize =
 
   <div style={styles.footer}>
     <button onClick={downloadPdf} style={styles.button}>
-      PDF erstellen
+     Jetzt PDF erstellen
     </button>
   </div>
 </aside>
