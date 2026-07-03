@@ -110,7 +110,7 @@ const previewHeight = 594 * scale;
       <div style={styles.container}>
         <header style={styles.header}>
           <h1 style={styles.logo}>
-            🌿 Studio<span style={{ color: "#A8B89A" }}>Flex</span> by kreaplott
+            🌿 <span style={{ color: "#284012" }}>Studio</span><span style={{ color: "#A8B89A" }}>Flex</span> <span style={{ fontSize: 11}}>by kreaplott</span>
           </h1>
           <p style={styles.subtitle}>Personalisiere deine Vorlage.</p>
         </header>
