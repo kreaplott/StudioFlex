@@ -1,0 +1,30 @@
+{
+  "categories": [
+    {
+      "id": "Toffiffee",
+      "name": "Toffiffee",
+      "templates": [
+        {
+          "id": "Danke1",
+          "name": "Danke 1",
+          "folder": "Toffiffee/Danke1"
+        }
+           , {
+          "id": "Danke2",
+          "name": "Danke 2",
+          "folder": "Toffiffee/Danke2"
+        }
+      ]
+    },
+    {
+      "id": "Produkt2",
+      "name": "Produkt2",
+      "templates": []
+    },
+    {
+      "id": "Produkt3",
+      "name": "Produkt3",
+      "templates": []
+    }
+  ]
+}
