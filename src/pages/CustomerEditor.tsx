@@ -70,6 +70,11 @@ setColors(initialColors);
   async function downloadPdf() {
   if (!cardRef.current || !config) return;
 
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  // Wichtig für iPhone: Fenster sofort öffnen, bevor await kommt
+  const mobileWindow = isMobile ? window.open("", "_blank") : null;
+
   const canvas = await html2canvas(cardRef.current, {
     scale: 3,
     backgroundColor: "#ffffff",
@@ -88,14 +93,15 @@ setColors(initialColors);
 
   const fileName = `${config.templateId.replaceAll("/", "-")}.pdf`;
 
-  const isMobile =
-    /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
   if (isMobile) {
     const pdfBlob = pdf.output("blob");
     const pdfUrl = URL.createObjectURL(pdfBlob);
 
-    window.open(pdfUrl, "_blank");
+    if (mobileWindow) {
+      mobileWindow.location.href = pdfUrl;
+    } else {
+      window.location.href = pdfUrl;
+    }
   } else {
     pdf.save(fileName);
   }
