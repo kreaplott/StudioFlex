@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { GOOGLE_FONTS } from "../data/fonts";
+import { getAutoFontSize } from "../engine/text";
 
 type TextField = {
   id: string;
@@ -107,7 +109,7 @@ function addFieldAt(x: number, y: number) {
       width: 250,
       height: 70,
       fontFamily: "Georgia",
-      allowedFonts: ["Georgia", "Segoe UI", "Arial", "Times New Roman"],
+      allowedFonts: GOOGLE_FONTS,
       fontSize: 36,
       minFontSize: 10,
       maxFontSize: 80,
@@ -318,7 +320,7 @@ function addFieldAt(x: number, y: number) {
             <img src={background} alt="Vorlage" style={styles.background} draggable={false} />
 
            {fields.map((field) => {
-            const displayFontSize = field.fontSize;
+            const displayFontSize = getAutoFontSize(field, field.defaultValue);
 
             return (
               <div
@@ -346,7 +348,7 @@ function addFieldAt(x: number, y: number) {
 
                   textAlign: field.align,
                   whiteSpace: field.multiline ? "pre-line" : "nowrap",
-
+                  lineHeight: 1.0,
                   overflow: "hidden",
 
                   display: "flex",
@@ -471,12 +473,20 @@ function addFieldAt(x: number, y: number) {
                     fontFamily: e.target.value,
                   })
                 }
-                style={styles.input}
+                style={{
+                  ...styles.input,
+                  fontFamily: selectedField.fontFamily,
+                }}
               >
-                <option value="Georgia">Georgia</option>
-                <option value="Segoe UI">Segoe UI</option>
-                <option value="Arial">Arial</option>
-                <option value="Times New Roman">Times New Roman</option>
+                {GOOGLE_FONTS.map((font) => (
+                  <option
+                    key={font}
+                    value={font}
+                    style={{ fontFamily: font }}
+                  >
+                    {font}
+                  </option>
+                ))}
               </select>
               <label>Schriftgröße</label>
               <input
@@ -631,7 +641,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   card: {
     width: 420,
-    aspectRatio: "1 / 1.414",
+    height: 594,
     position: "relative",
     overflow: "hidden",
     borderRadius: 16,

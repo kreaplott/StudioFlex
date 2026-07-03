@@ -7,4 +7,6 @@
 - automatisches Speichern
 - Cloud
 - Dashboard mit Previewbildern
-- Branding-Schriften
+
+
+- Admin und CustomerEditor vereinheitlichen in einer separaten Source (Schriftgröße, Zeilenabstand, Ausrichtung, Farben usw.).

@@ -4,6 +4,7 @@
 
 - Mobile Customer Editor weiter testen
 - Ersten kompletten Etsy-Testkauf durchführen
+- Schriften erweitern
 
 ## Fertig
 

@@ -3,6 +3,7 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import type { TemplateConfig } from "../types/Template.ts";
 import { getAutoFontSize } from "../engine/text.ts";
+import { GOOGLE_FONTS } from "../data/fonts";
 
 type CustomerEditorProps = {
   templateFolder: string;
@@ -71,7 +72,7 @@ setColors(initialColors);
 
   const canvas = await html2canvas(cardRef.current, {
     scale: 3,
-    backgroundColor: null,
+    backgroundColor: "#ffffff",
     useCORS: true,
   });
 
@@ -84,8 +85,21 @@ setColors(initialColors);
   });
 
   pdf.addImage(imageData, "PNG", 0, 0, canvas.width, canvas.height);
-  pdf.save(`${config.templateId.replaceAll("/", "-")}.pdf`);
+
+  const fileName = `${config.templateId.replaceAll("/", "-")}.pdf`;
+
+  const isMobile =
+    /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  if (isMobile) {
+    const pdfBlob = pdf.output("blob");
+    const pdfUrl = URL.createObjectURL(pdfBlob);
+
+    window.open(pdfUrl, "_blank");
+  } else {
+    pdf.save(fileName);
   }
+}
 
   if (!config) {
     return <p style={{ padding: 40 }}>Vorlage wird geladen...</p>;
@@ -168,7 +182,7 @@ const fontSize =
 
                       textAlign: field.align,
                       whiteSpace: field.multiline ? "pre-line" : "nowrap",
-                      lineHeight: 1.2,
+                      lineHeight: 1.0,
 
                       overflow: "hidden",
 
@@ -208,7 +222,15 @@ const fontSize =
   <h2 style={styles.formTitle}>{config.name}</h2>
 
   <div style={styles.formContent}>
-    {config.fields.map((field) => (
+   {config.fields
+  .filter(
+    (field) =>
+      field.editableText ||
+      field.editableFontSize ||
+      field.editableFontFamily ||
+      field.editableColor
+  )
+  .map((field) => (
       <div key={field.id} style={styles.fieldCard}>
         <h3 style={styles.fieldTitle}>{field.label}</h3>
 
@@ -267,22 +289,29 @@ const fontSize =
             {field.editableFontFamily && (
               <>
                 <label style={styles.label}>Schriftart</label>
-                <select
-                  value={fontFamilies[field.id] ?? field.fontFamily}
-                  onChange={(e) =>
-                    setFontFamilies({
-                      ...fontFamilies,
-                      [field.id]: e.target.value,
-                    })
-                  }
-                  style={styles.input}
-                >
-                  {(field.allowedFonts ?? [field.fontFamily]).map((font) => (
-                    <option key={font} value={font}>
-                      {font}
-                    </option>
-                  ))}
-                </select>
+               <select
+                value={fontFamilies[field.id] ?? field.fontFamily}
+                onChange={(e) =>
+                  setFontFamilies({
+                    ...fontFamilies,
+                    [field.id]: e.target.value,
+                  })
+                }
+                style={{
+                  ...styles.input,
+                  fontFamily: fontFamilies[field.id] ?? field.fontFamily,
+                }}
+              >
+                {GOOGLE_FONTS.map((font) => (
+                  <option
+                    key={font}
+                    value={font}
+                    style={{ fontFamily: font }}
+                  >
+                    {font}
+                  </option>
+                ))}
+              </select>
               </>
             )}
 
