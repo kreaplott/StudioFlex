@@ -1,8 +1,8 @@
 {
-  "templateId": "Toffiffee/Geburtstag/Geburtstag_Goose",
+  "templateId": "Toffiffee/Geburtstag_Goose",
   "name": "Tofiffee Goose",
   "version": "0.9",
-  "background": "/templates/Toffiffee/Geburtstag/Geburtstag_Goose/background.png",
+  "background": "/templates/Toffiffee/Geburtstag_Goose/background.png",
   "canvas": {
     "width": 420,
     "height": 594
