@@ -43,7 +43,6 @@ export interface TemplateField {
 export interface TemplateConfig {
   templateId: string;
   name: string;
-  background: string;
   version: string;
 
   canvas: {

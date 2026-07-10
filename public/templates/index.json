@@ -1,35 +1,55 @@
 {
   "categories": [
     {
-      "id": "Toffiffee",
-      "name": "Toffiffee",
+      "id": "Playground",
+      "name": "Playground",
       "templates": [
         {
-          "id": "Danke1",
-          "name": "Danke 1",
-          "folder": "Toffiffee/Danke1"
-        }
-           , {
-          "id": "Danke2",
-          "name": "Danke 2",
-          "folder": "Toffiffee/Danke2"
-        }
-              , {
-          "id": "Geburtstag_Goose",
-          "name": "Geburtstag Gooses",
-          "folder": "Toffiffee/Geburtstag/Geburtstag_Goose"
-        }
+        "id": "Danke1",
+        "name": "Danke1",
+        "folder": "Playground/Danke1",
+        "background": "background.png",
+        "adminBackground": "admin.png",
+        "preview": "preview.png"
+      },
+        {
+        "id": "Geburtstag",
+        "name": "Geburtstag",
+        "folder": "Playground/Geburtstag/Geburtstag_Goose",
+        "background": "background.png",
+         "adminBackground": "admin.png",
+        "preview": "preview.png"
+      }
       ]
     },
-    {
-      "id": "Produkt2",
-      "name": "Produkt2",
-      "templates": []
+     {
+      "id": "1_Toffifee",
+      "name": "1_Toffifee",
+      "templates": [
+        {
+        "id": "Danke_1",
+        "name": "Danke_1",
+        "folder": "1_Toffifee/Danke_1",
+        "background": "background.png",
+        "adminBackground": "admin.png",
+        "preview": "preview.png"
+      }
+      ]
     },
-    {
-      "id": "Produkt3",
-      "name": "Produkt3",
-      "templates": []
+         {
+      "id": "2_Duplo",
+      "name": "2_Duplo",
+      "templates": [
+        {
+        "id": "Fische",
+        "name": "Fische",
+        "folder": "2_Duplo/Fische",
+        "background": "background.png",
+        "adminBackground": "admin.png",
+        "preview": "preview.png"
+      }
+      ]
     }
+    
   ]
 }

@@ -1,15 +1,10 @@
 import { useEffect, useState } from "react";
-
-type Template = {
-  id: string;
-  name: string;
-  folder: string;
-};
+import type { TemplateMeta } from "../types/TemplateIndex";
 
 type Category = {
   id: string;
   name: string;
-  templates: Template[];
+  templates: TemplateMeta[];
 };
 
 type TemplateIndex = {
@@ -17,7 +12,7 @@ type TemplateIndex = {
 };
 
 type DashboardProps = {
-onOpenEditor: (templateFolder: string) => void;
+  onOpenEditor: (template: TemplateMeta) => void;
 };
 
 export default function Dashboard({
@@ -59,7 +54,7 @@ export default function Dashboard({
 
                 <button
                   style={styles.button}
-                 onClick={() => onOpenEditor(template.folder)}
+                onClick={() => onOpenEditor(template)}
                 >
                   Bearbeiten
                 </button>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Dashboard from "./pages/Dashboard";
 import AdminEditor from "./pages/AdminEditor";
 import CustomerEditor from "./pages/CustomerEditor";
+import type { TemplateMeta, TemplateIndex } from "./types/TemplateIndex";
 
 type Mode = "dashboard" | "admin" | "customer";
 
@@ -12,9 +13,17 @@ type LinkEntry = {
 
 const ADMIN_PASSWORD = "studioflex";
 
+function findTemplateByFolder(index: TemplateIndex, folder: string) {
+  return index.categories
+    .flatMap((category) => category.templates)
+    .find((template) => template.folder === folder);
+}
+
 function App() {
   const [mode, setMode] = useState<Mode>("dashboard");
-  const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
+  const [selectedTemplate, setSelectedTemplate] =
+    useState<TemplateMeta | null>(null);
+
   const [isAdminUnlocked, setIsAdminUnlocked] = useState(false);
   const [password, setPassword] = useState("");
   const [isCheckingLink, setIsCheckingLink] = useState(true);
@@ -29,20 +38,27 @@ function App() {
 
     const token = hash.replace("#/e/", "");
 
-    fetch("/templates/links.json")
-      .then((res) => res.json())
-      .then((data: { links: LinkEntry[] }) => {
-        const match = data.links.find((link) => link.token === token);
+    Promise.all([
+      fetch("/templates/links.json").then((res) => res.json()),
+      fetch("/templates/index.json").then((res) => res.json()),
+    ]).then(([linksData, indexData]: [{ links: LinkEntry[] }, TemplateIndex]) => {
+      const match = linksData.links.find((link) => link.token === token);
 
-        if (match) {
-          setSelectedTemplate(match.templateFolder);
+      if (match) {
+        const template = findTemplateByFolder(indexData, match.templateFolder);
+
+        if (template) {
+          setSelectedTemplate(template);
           setMode("customer");
         } else {
-          alert("Dieser Link ist ungültig.");
+          alert("Vorlage wurde nicht gefunden.");
         }
+      } else {
+        alert("Dieser Link ist ungültig.");
+      }
 
-        setIsCheckingLink(false);
-      });
+      setIsCheckingLink(false);
+    });
   }, []);
 
   if (isCheckingLink) {
@@ -84,7 +100,7 @@ function App() {
   if (mode === "admin" && selectedTemplate) {
     return (
       <AdminEditor
-        templateFolder={selectedTemplate}
+        template={selectedTemplate}
         onSwitchMode={() => setMode("customer")}
         onBackToDashboard={() => setMode("dashboard")}
       />
@@ -92,13 +108,13 @@ function App() {
   }
 
   if (mode === "customer" && selectedTemplate) {
-    return <CustomerEditor templateFolder={selectedTemplate} />;
+    return <CustomerEditor template={selectedTemplate} />;
   }
 
   return (
     <Dashboard
-      onOpenEditor={(templateFolder) => {
-        setSelectedTemplate(templateFolder);
+      onOpenEditor={(template) => {
+        setSelectedTemplate(template);
         setMode("admin");
       }}
     />

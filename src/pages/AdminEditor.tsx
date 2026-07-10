@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { GOOGLE_FONTS } from "../data/fonts";
 import { getAutoFontSize } from "../engine/text";
+import type { TemplateMeta } from "../types/TemplateIndex";
 
 type TextField = {
   id: string;
@@ -31,20 +32,20 @@ type TextField = {
 };
 
 type AdminEditorProps = {
-  templateFolder: string;
+  template: TemplateMeta;
   onSwitchMode: () => void;
   onBackToDashboard: () => void;
 };
 
 export default function AdminEditor({
-  templateFolder,
+  template,
   onSwitchMode,
   onBackToDashboard,
 }: AdminEditorProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
  const [templateName, setTemplateName] = useState("");
-const [templateId, setTemplateId] = useState(templateFolder);
+const [templateId, setTemplateId] = useState(template.folder);
 const [background, setBackground] = useState("");
   const [fields, setFields] = useState<TextField[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -64,7 +65,7 @@ useEffect(() => {
     setTemplateId(draft.templateId ?? "Toffiffee/Danke1");
     setBackground(
       draft.background ??
-        "/templates/Toffiffee/Danke1/background.png"
+        "`/templates/${template.folder}/${template.background}`"
     );
     setFields(draft.fields ?? []);
   }
@@ -86,15 +87,17 @@ useEffect(() => {
   );
 }, [isLoaded, templateName, templateId, background, fields]);
   useEffect(() => {
-  fetch(`/templates/${templateFolder}/config.json`)
+  fetch(`/templates/${template.folder}/config.json`)
     .then((r) => r.json())
     .then((config) => {
       setTemplateName(config.name);
       setTemplateId(config.templateId);
-      setBackground(config.background);
+     setBackground(
+  `/templates/${template.folder}/${template.adminBackground ?? template.background}`
+);
       setFields(config.fields);
     });
-}, [templateFolder]);
+}, [template.folder]);
 
 function addFieldAt(x: number, y: number) {
     const id = `field-${Date.now()}`;
@@ -183,7 +186,6 @@ function addFieldAt(x: number, y: number) {
       templateId,
       name: templateName,
       version: "0.9",
-      background: `/templates/${templateId}/background.png`,
 
       canvas: {
         width: 420,

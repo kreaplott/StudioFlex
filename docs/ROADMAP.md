@@ -10,3 +10,11 @@
 
 
 - Admin und CustomerEditor vereinheitlichen in einer separaten Source (Schriftgröße, Zeilenabstand, Ausrichtung, Farben usw.).
+
+## Customer Editor
+
+- Intelligente Hinweise zur Schriftgröße
+  - Anzeige der tatsächlich verwendeten Schriftgröße nach AutoResize
+  - Hinweis, wenn AutoResize die gewünschte Schriftgröße reduziert
+  - Hinweis, wenn die minimale Schriftgröße erreicht ist
+  - Hinweis, wenn der Text trotz AutoResize nicht vollständig dargestellt werden kann

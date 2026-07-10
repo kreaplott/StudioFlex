@@ -8,7 +8,7 @@ http://localhost:5173/
 Öffentliche Erreichbarkeit:
 https://studioflexkreaplott.netlify.app
 https://studioflexkreaplott.netlify.app/#/e/kp-toffi-danke-7Xq92LmA
-
+https://studioflexkreaplott.netlify.app/#/e/zs-toffi-geb-PM4DR7A
 GitHub: Sicherung und Versionierung
 
 Änderungen Pushen zum Go-Live
@@ -25,3 +25,14 @@ GitHub
 Netlify baut automatisch
     ↓
 Website aktualisiert
+
+
+Neues Release
+STRG + C
+npm run build
+git add .
+git commit -m "fix Resizing"
+git push
+
+
+Kategorien ändern > Index Datei

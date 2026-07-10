@@ -4,14 +4,13 @@ import jsPDF from "jspdf";
 import type { TemplateConfig } from "../types/Template.ts";
 import { getAutoFontSize } from "../engine/text.ts";
 import { GOOGLE_FONTS } from "../data/fonts";
+import type { TemplateMeta } from "../types/TemplateIndex";
 
 type CustomerEditorProps = {
-  templateFolder: string;
+  template: TemplateMeta;
 };
 
-export default function CustomerEditor({
-  templateFolder,
-}: CustomerEditorProps) {
+export default function CustomerEditor({ template }: CustomerEditorProps) {
   const [config, setConfig] = useState<TemplateConfig | null>(null);
   const [values, setValues] = useState<Record<string, string>>({});
   const [fontSizes, setFontSizes] = useState<Record<string, number>>({});
@@ -32,7 +31,7 @@ useEffect(() => {
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-   fetch(`/templates/${templateFolder}/config.json`)
+   fetch(`/templates/${template.folder}/config.json`)
       .then((res) => res.json())
       .then((data: TemplateConfig) => {
         setConfig(data);
@@ -83,13 +82,13 @@ setColors(initialColors);
 
   const imageData = canvas.toDataURL("image/png");
 
-  const pdf = new jsPDF({
-    orientation: "portrait",
-    unit: "px",
-    format: [canvas.width, canvas.height],
-  });
+const pdf = new jsPDF({
+  orientation: "portrait",
+  unit: "mm",
+  format: "a4",
+});
 
-  pdf.addImage(imageData, "PNG", 0, 0, canvas.width, canvas.height);
+pdf.addImage(imageData, "PNG", 0, 0, 210, 297);
 
   const fileName = `${config.templateId.replaceAll("/", "-")}.pdf`;
 
@@ -150,25 +149,24 @@ const previewHeight = 594 * scale;
                 height: previewHeight,
               }}
             >
-              <img
-                src={config.background}
+             <img
+                src={`/templates/${template.folder}/background.png`}
                 alt={config.name}
                 style={styles.background}
               />
 
               {config.fields.map((field) => {
                 const value = values[field.id] ?? "";
-               const customerFontSize = fontSizes[field.id] ?? field.fontSize;
+              const customerFontSize = fontSizes[field.id] ?? field.fontSize;
 
-                const fontSize = field.editableFontSize
-                  ? customerFontSize * scale
-                  : getAutoFontSize(
-                      {
-                        ...field,
-                        fontSize: customerFontSize,
-                      },
-                      value
-                    ) * scale;
+              const fontSize =
+                getAutoFontSize(
+                  {
+                    ...field,
+                    fontSize: customerFontSize,
+                  },
+                  value
+                ) * scale;
 
 
                 return (
@@ -251,7 +249,6 @@ const previewHeight = 594 * scale;
             {field.type === "textarea" ? (
               <textarea
                 value={values[field.id] ?? ""}
-                maxLength={field.maxCharacters}
                 onChange={(e) =>
                   setValues({ ...values, [field.id]: e.target.value })
                 }
@@ -268,6 +265,15 @@ const previewHeight = 594 * scale;
                 style={styles.input}
               />
             )}
+            <div style={styles.characterHint}>
+              {(values[field.id] ?? "").length} / {field.maxCharacters} Zeichen
+            </div>
+
+            {(values[field.id] ?? "").length > field.maxCharacters && (
+              <div style={styles.warningText}>
+                Dein Text ist länger als empfohlen. Die Schrift kann sehr klein werden.
+              </div>
+            )}
           </div>
         )}
 
@@ -277,24 +283,45 @@ const previewHeight = 594 * scale;
           <div style={styles.optionGroup}>
             <span style={styles.sectionTitle}>Darstellung</span>
 
-            {field.editableFontSize && (
-              <>
-                <label style={styles.label}>Schriftgröße</label>
-                <input
-                  type="number"
-                  value={fontSizes[field.id] ?? field.fontSize}
-                  min={field.minFontSize}
-                  max={field.maxFontSize}
-                  onChange={(e) =>
-                    setFontSizes({
-                      ...fontSizes,
-                      [field.id]: Number(e.target.value),
-                    })
-                  }
-                  style={styles.input}
-                />
-              </>
-            )}
+           {field.editableFontSize && (
+  <>
+    <label style={styles.label}>Schriftgröße</label>
+
+    <input
+      type="number"
+      value={fontSizes[field.id] ?? field.fontSize}
+      min={field.minFontSize}
+      max={field.maxFontSize}
+      onChange={(e) =>
+        setFontSizes({
+          ...fontSizes,
+          [field.id]: Number(e.target.value),
+        })
+      }
+      style={styles.input}
+    />
+
+    {field.autoResize &&
+      (fontSizes[field.id] ?? field.fontSize) >
+        getAutoFontSize(
+          {
+            ...field,
+            fontSize: fontSizes[field.id] ?? field.fontSize,
+          },
+          values[field.id] ?? ""
+        ) && (
+        <div style={styles.warningText}>
+          Hinweis: Die Schrift wurde automatisch verkleinert, damit dein Text vollständig auf die Karte passt.
+        </div>
+      )}
+
+    {(fontSizes[field.id] ?? field.fontSize) <= field.minFontSize && (
+      <div style={styles.characterHint}>
+        Minimale Schriftgröße erreicht.
+      </div>
+    )}
+  </>
+)}
 
             {field.editableFontFamily && (
               <>
@@ -490,6 +517,19 @@ footer: {
   padding: 24,
   borderTop: "1px solid #E6E0D8",
   background: "white",
+},
+
+characterHint: {
+  marginTop: 6,
+  fontSize: 13,
+  color: "#8A7B6A",
+},
+
+warningText: {
+  marginTop: 6,
+  fontSize: 13,
+  color: "#B86B4B",
+  fontWeight: 600,
 },
 
 button: {
