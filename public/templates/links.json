@@ -2,16 +2,16 @@
   "links": [
     {
       "token": "kp-toffi-danke-7Xq92LmA",
-      "templateId": "Danke1"
+      "templateId": "Playground/Danke1"
     },
       {
       "token": "zs-toffi-geb-PM4DR7A",
-      "templateId": "Geburtstag_Goose"
+      "templateId": "Playground/Geburtstag/Geburtstag_Goose"
     }
   ,
     {
       "token": "pt-dup-fisch-ZMD4W1",
-      "templateId": "Fische"
+      "templateId": "2_Duplo/Fische"
     }
   ]
 }
