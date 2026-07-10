@@ -41,8 +41,8 @@
       "name": "2_Duplo",
       "templates": [
         {
-        "id": "Fische",
-        "name": "Fische",
+        "id": "2_Fische",
+        "name": "2_Fische",
         "folder": "2_Duplo/Fische",
         "background": "background.png",
         "adminBackground": "admin.png",

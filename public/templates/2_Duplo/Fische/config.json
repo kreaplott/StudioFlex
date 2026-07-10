@@ -1,6 +1,6 @@
 {
-  "templateId": "2_Duplo/Fische",
-  "name": "Fische",
+  "templateId": "2_Fische",
+  "name": "2_Fische",
   "version": "0.9",
   "canvas": {
     "width": 420,

@@ -8,15 +8,15 @@ type Mode = "dashboard" | "admin" | "customer";
 
 type LinkEntry = {
   token: string;
-  templateFolder: string;
+  templateId: string;
 };
 
 const ADMIN_PASSWORD = "studioflex";
 
-function findTemplateByFolder(index: TemplateIndex, folder: string) {
+function findTemplateById(index: TemplateIndex, templateId: string) {
   return index.categories
     .flatMap((category) => category.templates)
-    .find((template) => template.folder === folder);
+    .find((template) => template.id === templateId);
 }
 
 function App() {
@@ -41,24 +41,43 @@ function App() {
     Promise.all([
       fetch("/templates/links.json").then((res) => res.json()),
       fetch("/templates/index.json").then((res) => res.json()),
-    ]).then(([linksData, indexData]: [{ links: LinkEntry[] }, TemplateIndex]) => {
-      const match = linksData.links.find((link) => link.token === token);
+    ])
+      .then(
+        ([linksData, indexData]: [
+          { links: LinkEntry[] },
+          TemplateIndex
+        ]) => {
+          const match = linksData.links.find(
+            (link) => link.token === token
+          );
 
-      if (match) {
-        const template = findTemplateByFolder(indexData, match.templateFolder);
+          if (!match) {
+            alert("Dieser Link ist ungültig.");
+            setIsCheckingLink(false);
+            return;
+          }
 
-        if (template) {
+          const template = findTemplateById(
+            indexData,
+            match.templateId
+          );
+
+          if (!template) {
+            alert("Vorlage wurde nicht gefunden.");
+            setIsCheckingLink(false);
+            return;
+          }
+
           setSelectedTemplate(template);
           setMode("customer");
-        } else {
-          alert("Vorlage wurde nicht gefunden.");
+          setIsCheckingLink(false);
         }
-      } else {
-        alert("Dieser Link ist ungültig.");
-      }
-
-      setIsCheckingLink(false);
-    });
+      )
+      .catch((error) => {
+        console.error("Fehler beim Laden des Kundenlinks:", error);
+        alert("Der Kundenlink konnte nicht geladen werden.");
+        setIsCheckingLink(false);
+      });
   }, []);
 
   if (isCheckingLink) {
