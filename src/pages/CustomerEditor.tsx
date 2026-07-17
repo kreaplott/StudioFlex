@@ -157,16 +157,17 @@ const previewHeight = 594 * scale;
 
               {config.fields.map((field) => {
                 const value = values[field.id] ?? "";
-              const customerFontSize = fontSizes[field.id] ?? field.fontSize;
+           const customerFontSize = fontSizes[field.id] ?? field.fontSize;
 
-              const fontSize =
-                getAutoFontSize(
-                  {
-                    ...field,
-                    fontSize: customerFontSize,
-                  },
-                  value
-                ) * scale;
+const fontSize = field.autoResize
+  ? getAutoFontSize(
+      {
+        ...field,
+        fontSize: customerFontSize,
+      },
+      value
+    ) * scale
+  : customerFontSize * scale;
 
 
                 return (

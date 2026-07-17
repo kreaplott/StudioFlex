@@ -123,7 +123,7 @@ function addFieldAt(x: number, y: number) {
       verticalAlign: "middle",
       maxCharacters: 40,
       multiline: false,
-      autoResize: true,
+      autoResize: false,
       editableText: true,
       editableFontFamily: false,
       editableFontSize: true,
@@ -322,7 +322,9 @@ function addFieldAt(x: number, y: number) {
             <img src={background} alt="Vorlage" style={styles.background} draggable={false} />
 
            {fields.map((field) => {
-            const displayFontSize = getAutoFontSize(field, field.defaultValue);
+            const displayFontSize = field.autoResize
+  ? getAutoFontSize(field, field.defaultValue)
+  : field.fontSize;
 
             return (
               <div
@@ -501,7 +503,21 @@ function addFieldAt(x: number, y: number) {
                 }
                 style={styles.input}
               />
+              <label style={styles.label}>Textausrichtung</label>
 
+<select
+  value={selectedField.align}
+  onChange={(e) =>
+    updateField(selectedField.id, {
+      align: e.target.value as "left" | "center" | "right",
+    })
+  }
+  style={styles.input}
+>
+  <option value="left">Linksbündig</option>
+  <option value="center">Zentriert</option>
+  <option value="right">Rechtsbündig</option>
+</select>
               <label>Farbe</label>
               <input
                 type="color"
@@ -535,6 +551,19 @@ function addFieldAt(x: number, y: number) {
                 }
                 style={styles.input}
               />
+
+              <label style={styles.checkboxLabel}>
+  <input
+    type="checkbox"
+    checked={selectedField.autoResize}
+    onChange={(e) =>
+      updateField(selectedField.id, {
+        autoResize: e.target.checked,
+      })
+    }
+  />
+  Automatische Schriftgrößenanpassung
+</label>
 <h3 style={{ marginTop: 10 }}>Kundenoptionen</h3>
 
 <label style={styles.checkboxLabel}>
@@ -727,8 +756,8 @@ const styles: Record<string, React.CSSProperties> = {
   checkboxLabel: {
   display: "flex",
   alignItems: "center",
-  gap: 10,
-  margin: "8px 0 12px",
-  fontSize: 15,
-  },
+  gap: 8,
+  marginTop: 12,
+  marginBottom: 12,
+}
 };

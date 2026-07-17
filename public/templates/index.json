@@ -22,14 +22,75 @@
       }
       ]
     },
-     {
+     
+    {
       "id": "1_Toffifee",
       "name": "1_Toffifee",
       "templates": [
         {
-        "id": "Danke_1",
-        "name": "Danke_1",
-        "folder": "1_Toffifee/Danke_1",
+        "id": "1_BallonsGruenBlau",
+        "name": "1_BallonsGruenBlau",
+        "folder": "1_Toffifee/1_BallonsGruenBlau",
+        "background": "background.png",
+        "adminBackground": "admin.png",
+        "preview": "preview.png"
+      },
+      {
+        "id": "1_Einschulung_Rucksack",
+        "name": "1_Einschulung_Rucksack",
+        "folder": "1_Toffifee/1_Einschulung_Rucksack",
+        "background": "background.png",
+        "adminBackground": "admin.png",
+        "preview": "preview.png"
+      },
+      {
+        "id": "1_Einschulung_Stifte",
+        "name": "1_Einschulung_Stifte",
+        "folder": "1_Toffifee/1_Einschulung_Stifte",
+        "background": "background.png",
+        "adminBackground": "admin.png",
+        "preview": "preview.png"
+      },
+      {
+        "id": "1_GelbeBallons",
+        "name": "1_GelbeBallons",
+        "folder": "1_Toffifee/1_GelbeBallons",
+        "background": "background.png",
+        "adminBackground": "admin.png",
+        "preview": "preview.png"
+      }
+      ,
+      {
+        "id": "1_Goose",
+        "name": "1_Goose",
+        "folder": "1_Toffifee/1_Goose",
+        "background": "background.png",
+        "adminBackground": "admin.png",
+        "preview": "preview.png"
+      }
+      ,
+      {
+        "id": "1_Danke_1",
+        "name": "1_Danke_1",
+        "folder": "1_Toffifee/1_Danke_1",
+        "background": "background.png",
+        "adminBackground": "admin.png",
+        "preview": "preview.png"
+      }
+      ,
+      {
+        "id": "1_HochzeitBlumen",
+        "name": "1_HochzeitBlumen",
+        "folder": "1_Toffifee/1_HochzeitBlumen",
+        "background": "background.png",
+        "adminBackground": "admin.png",
+        "preview": "preview.png"
+      }
+      ,
+      {
+        "id": "1_Hochzeit_Hochaufeuch",
+        "name": "1_Hochzeit_Hochaufeuch",
+        "folder": "1_Toffifee/1_Hochzeit_Hochaufeuch",
         "background": "background.png",
         "adminBackground": "admin.png",
         "preview": "preview.png"
@@ -44,6 +105,56 @@
         "id": "2_Fische",
         "name": "2_Fische",
         "folder": "2_Duplo/Fische",
+        "background": "background.png",
+        "adminBackground": "admin.png",
+        "preview": "preview.png"
+      },
+      {
+        "id": "2_Funfetti",
+        "name": "2_Funfetti",
+        "folder": "2_Duplo/2_Funfetti",
+        "background": "background.png",
+        "adminBackground": "admin.png",
+        "preview": "preview.png"
+      },
+      {
+        "id": "2_GreyStripes",
+        "name": "2_GreyStripes",
+        "folder": "2_Duplo/2_GreyStripes",
+        "background": "background.png",
+        "adminBackground": "admin.png",
+        "preview": "preview.png"
+      },
+      {
+        "id": "2_YellowStripes",
+        "name": "2_YellowStripes",
+        "folder": "2_Duplo/2_YellowStripes",
+        "background": "background.png",
+        "adminBackground": "admin.png",
+        "preview": "preview.png"
+      }
+      ,
+      {
+        "id": "2_SplashRosa",
+        "name": "2_SplashRosa",
+        "folder": "2_Duplo/2_SplashRosa",
+        "background": "background.png",
+        "adminBackground": "admin.png",
+        "preview": "preview.png"
+      },
+      {
+        "id": "2_SplashGruen",
+        "name": "2_SplashGruen",
+        "folder": "2_Duplo/2_SplashGruen",
+        "background": "background.png",
+        "adminBackground": "admin.png",
+        "preview": "preview.png"
+      }
+      ,
+      {
+        "id": "2_School1",
+        "name": "2_School1",
+        "folder": "2_Duplo/2_School1",
         "background": "background.png",
         "adminBackground": "admin.png",
         "preview": "preview.png"

@@ -12,6 +12,61 @@
     {
       "token": "pt-dup-fisch-ZMD4W1",
       "templateId": "2_Fische"
-    }
+    },
+        {
+      "token": "ka-dup-SplRos-NaUN3As",
+      "templateId": "2_SplashRosa"
+    },
+         {
+      "token": "mn-dup-SplaGr-u8F4Sw",
+      "templateId": "2_SplashGruen"
+    },
+         {
+      "token": "We-dup-YeStrip-Ex6J9Mp",
+      "templateId": "2_YellowStripes"
+    },
+         {
+      "token": "Lh-dup-GrStrip-BzM84De",
+      "templateId": "2_GreyStripes"
+    },
+         {
+      "token": "nU-dup-FunFet-Jz4T9Dws",
+      "templateId": "2_Funfetti"
+    },
+         {
+      "token": "hS-dup-Schoo1-KoZ4FsX",
+      "templateId": "2_School1"
+    }  
+    
+    , 
+     {
+      "token": "dj-tof-BalGrBl-Ku8RdBnSa",
+      "templateId": "1_BallonsGruenBlau"
+    }    
+, 
+     {
+      "token": "kr-tof-EinsRuck-J7ZgCx5rD",
+      "templateId": "1_BallonsGruenBlau"
+    }  
+    , 
+     {
+      "token": "pd-tof-EinsStif-SdK93E64",
+      "templateId": "1_Einschulung_Stifte"
+    }   
+      , 
+     {
+      "token": "k9-tof-GeLBal-Z64FM712",
+      "templateId": "1_GelbeBallons"
+    }  
+     , 
+     {
+      "token": "Z7-tof-Goo53-P6R4Dg7Ax",
+      "templateId": "1_Goose"
+    }    
+     , 
+     {
+      "token": "L2-tof-Goo53-ZrF5W2Cl9",
+      "templateId": "1_Danke_1"
+    }    
   ]
 }
